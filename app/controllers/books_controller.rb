@@ -1,17 +1,18 @@
 class BooksController < ApplicationController
+  before_action :is_matching_login_user, only: [:edit, :update, :destroy]
+  
   def index
     @book = Book.new
     @books = Book.all
   end
 
   def create
-    book = Book.new(book_params)
-    book.user_id = current_user.id
-    if book.save
+    @book = Book.new(book_params)
+    @book.user_id = current_user.id
+    if @book.save
       flash[:notice] = "You have created book successfully."
-      redirect_to book_path(book)
+      redirect_to book_path(@book)
     else
-      @book = Book.new
       @books = Book.all
       render :index
     end
@@ -28,12 +29,11 @@ class BooksController < ApplicationController
   end
 
   def update
-    book = Book.find(params[:id])
-    if book.update(book_params)
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
       flash[:notice] = "You have updated book successfully."
-      redirect_to book_path(book)
+      redirect_to book_path(@book)
     else
-      @book = Book.find(params[:id])
       render :edit
     end
   end
@@ -48,5 +48,12 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:title, :body)
+  end
+  
+  def is_matching_login_user
+    book = Book.find(params[:id])
+    unless book.user == current_user
+      redirect_to books_path
+    end
   end
 end
