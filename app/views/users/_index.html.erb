@@ -19,7 +19,7 @@
         <td>
           <%= link_to 'Show', user_path(user) %>
         </td>
-        <td>
+        <td class="follow_<%= user.id %>">
           <%= render 'relationships/follow_form', user: user %>
         </td>
       </tr>

@@ -15,7 +15,9 @@
       <th>followings</th>
       <th>
         <%= link_to user_followings_path(user) do %>
-          <%= user.followings.count %>
+          <span class="following_count_<%= user.id %>">
+            <%= user.followings.count %>
+          </span>
         <% end %>
       </th>
     </tr>
@@ -23,7 +25,9 @@
       <th>follower</th>
       <th>
         <%= link_to user_followers_path(user) do %>
-          <%= user.followers.count %>
+          <span class="follower_count_<%= user.id %>">
+            <%= user.followers.count %>
+          </span>
         <% end %>
       </th>
     </tr>
@@ -36,6 +40,8 @@
       <i class="fas fa-user-cog"></i>
     <% end %>
   <% else %>
-    <%= render 'relationships/follow_form', user: user %>
+    <div class="follow_<%= user.id %>">
+      <%= render 'relationships/follow_form', user: user %>
+    </div>
   <% end %>
 </div>
