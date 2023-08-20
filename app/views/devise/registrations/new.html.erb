@@ -17,6 +17,17 @@
         </div>
 
         <div class="field">
+          <label for="shoe_size">gender</label><br />
+          <%= f.select :gender, User.genders.keys.map { |k| k }, include_blank: true  %>
+        </div>
+
+        <div class="field">
+          <label for="shoe_size">age</label><br />
+          <%= f.select :age, options_for_select((10..100).step(10)), include_blank: true %> 歳代
+        </div>
+
+
+        <div class="field">
           <%= f.label :password %>
           <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>

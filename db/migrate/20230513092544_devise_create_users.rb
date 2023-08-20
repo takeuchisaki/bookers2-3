@@ -35,7 +35,10 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
 
       t.timestamps null: false
       
-      t.string :name
+      t.string  :name
+      t.integer :gender, default: 0
+      t.integer :age
+      
       
     end
 
