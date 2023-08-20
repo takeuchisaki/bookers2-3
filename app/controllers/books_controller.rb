@@ -1,9 +1,10 @@
 class BooksController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update, :destroy]
-  
+
   def index
     @book = Book.new
-    @books = Book.all.order(created_at: :desc)
+    @books = Book.user_filters(params)
+                 .order(created_at: :desc)
   end
 
   def create
@@ -47,9 +48,9 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :word)
   end
-  
+
   def is_matching_login_user
     book = Book.find(params[:id])
     unless book.user == current_user
